@@ -9,8 +9,8 @@ import com.morkaz.moxplayerparticles.commands.PlayerParticlesCommandBody;
 import com.morkaz.moxplayerparticles.configuration.ConfigManager;
 import com.morkaz.moxplayerparticles.managers.DataManager;
 import com.morkaz.moxplayerparticles.misc.AsyncPlayerDataUpdater;
+import com.morkaz.moxplayerparticles.misc.Metrics;
 import org.apache.commons.lang3.tuple.Pair;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -29,7 +29,7 @@ public class MoxPlayerParticles extends JavaPlugin {
 	private ConfigManager configManager;
 	private AsyncPlayerDataUpdater playerDataUpdater;
 	private Metrics metrics;
-	public String
+	public final String
 			TABLE = "Players",
 			ID_COLUMN = "ID",
 			DATA_COLUMN= "ParticleData",
