@@ -1,0 +1,15 @@
+locale: pl
+
+permission-schema: "mox.playerparticles.particle.%particle%"
+
+database:
+  type: "sqlite"
+  settings:
+    sqlite:
+      file-location: "%plugin-folder%/database.db"
+    mysql:
+      host: "localhost"
+      port: "3306"
+      database: "Mox_TokenShop"
+      user: "root"
+      password: "password"

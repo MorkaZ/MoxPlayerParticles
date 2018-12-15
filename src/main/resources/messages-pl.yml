@@ -1,0 +1,24 @@
+misc:
+  prefix: "&e&l[&9&lMox&b&lPlayerParticles&e&l] "
+  separator: "&8------&7-----&f----&9*&b&l*&9*&f----&7-----&8------"
+
+help-outputs:
+  set: "&bUstawia dla wybranego typu efektu (np. chodzenia) wybrane ustawienia czateczki o okreslonym indeksie (domyślnie dla każdej cząstki nazwa ustawienia to nazwa cząstki)."
+  remove: "&bUsuwa efekt czasteczek w wpisanym typie efektu (np. chodzeniu). Po usunięciu efekt nie będzie się wyświetlał."
+  set-other-player: "&bUstawia dla gracza, dla wpisanego typu efektu, podaną konfiguracje czasteczki."
+  remove-other-player: "&bUsuwa podanemu graczowi efekt cząsteczek w podanym typie efektu."
+
+usage-outputs:
+  no-permission: "&cNie masz do tego odpowiednich uprawnień!"
+  no-permission-for-particle: "&cNie masz uprawnień do tego efektu cząsteczki!"
+  bad-command-usage: "&cKomenda została źle użyta, poprawne użycie: %command%"
+  nick-too-long: "&cNazwa gracza jest zbyt długa (max 16 znaków)."
+  effect-type-not-exist: "&cTen typ wyświetlania efektu cząsteczek nie istnieje. Dostępne efekty to: &3[%effects%]&c."
+  particle-index-null: "&cPodany index ustawień cząstki (&3%index%&c) nie istnieje!"
+  player-command-only: "&cTa komenda może zostać wywołana &c&lTYLKO &cz poziomu gracza!"
+
+command-output:
+  particle-effect-set-other-player: "&bUstawienia efektu dla gracza &3%player% &bzostały ustawione na: &3%effect%&7->&3%index%"
+  particle-effect-removed-other-player: "&bUstawienia efektu &3%effect% dla gracza &3%player% &bzostały &eusunięte!"
+  particle-effect-set: "&bUstawiłeś efekt cząsteczek na: &3%effect%&7->%index%&b."
+  particle-effect-removed: "&bUsunąłeś efekt cząsteczek w typie efektu: \"&3%effect%&b.\""
