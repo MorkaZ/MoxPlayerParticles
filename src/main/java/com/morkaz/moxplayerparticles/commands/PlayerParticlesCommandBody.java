@@ -264,11 +264,6 @@ public class PlayerParticlesCommandBody implements CommandExecutor, TabCompleter
 				list.addAll(main.getDataManager().particleSettingMap.keySet());
 				list.removeIf(s -> !s.startsWith(args.get(2).toUpperCase()));
 				return list;
-			} else if (args.get(0).equalsIgnoreCase("remove")) {
-				List<String> list = new ArrayList();
-				list.addAll(main.getDataManager().particleSettingMap.keySet());
-				list.removeIf(s -> !s.startsWith(args.get(2).toUpperCase()));
-				return list;
 			} else if (args.get(0).equalsIgnoreCase("removep")) {
 				List<String> list = ToolBox.toStringList(EffectType.values());
 				list.removeIf(s -> !s.startsWith(args.get(2).toUpperCase()));
@@ -280,11 +275,6 @@ public class PlayerParticlesCommandBody implements CommandExecutor, TabCompleter
 			}
 		} else if (args.size() == 4){
 			if (args.get(0).equalsIgnoreCase("setp")) {
-				List<String> list = new ArrayList();
-				list.addAll(main.getDataManager().particleSettingMap.keySet());
-				list.removeIf(s -> !s.startsWith(args.get(3).toUpperCase()));
-				return list;
-			} else if (args.get(0).equalsIgnoreCase("removep")) {
 				List<String> list = new ArrayList();
 				list.addAll(main.getDataManager().particleSettingMap.keySet());
 				list.removeIf(s -> !s.startsWith(args.get(3).toUpperCase()));
