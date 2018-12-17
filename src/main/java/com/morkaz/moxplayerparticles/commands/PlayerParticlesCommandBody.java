@@ -6,6 +6,7 @@ import com.morkaz.moxplayerparticles.MoxPlayerParticles;
 import com.morkaz.moxplayerparticles.data.ParticleSetting;
 import com.morkaz.moxplayerparticles.data.PlayerData;
 import com.morkaz.moxplayerparticles.misc.EffectType;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -85,7 +86,7 @@ public class PlayerParticlesCommandBody implements CommandExecutor, TabCompleter
 				ParticleSetting particleSetting = main.getDataManager().getParticleSetting(particleIndex);
 				if (particleSetting == null) {
 					ServerUtils.sendMessage(sender, main.getPrefix(), main.getMessagesConfig().getString("usage-outputs.particle-index-null")
-							.replace("%particle%", args.get(2))
+							.replace("%effect%", args.get(2))
 					);
 					return true;
 				}
@@ -174,7 +175,7 @@ public class PlayerParticlesCommandBody implements CommandExecutor, TabCompleter
 				ParticleSetting particleSetting = main.getDataManager().getParticleSetting(particleIndex);
 				if (particleSetting == null){
 					ServerUtils.sendMessage(sender, main.getPrefix(), main.getMessagesConfig().getString("usage-outputs.particle-index-null")
-							.replace("%particle%", args.get(3))
+							.replace("%effect%", args.get(3))
 					);
 					return true;
 				}
@@ -245,9 +246,13 @@ public class PlayerParticlesCommandBody implements CommandExecutor, TabCompleter
 			}
 		} else if (args.size() == 2){
 			if (args.get(0).equalsIgnoreCase("set")){
-				return Arrays.asList("<effect.type>");
+				List<String> list = ToolBox.toStringList(EffectType.values());
+				list.removeIf(s -> !s.startsWith(args.get(1).toUpperCase()));
+				return list;
 			} else if (args.get(0).equalsIgnoreCase("remove")){
-				return Arrays.asList("<effect.type>");
+				List<String> list = ToolBox.toStringList(EffectType.values());
+				list.removeIf(s -> !s.startsWith(args.get(1).toUpperCase()));
+				return list;
 			} else if (args.get(0).equalsIgnoreCase("removep")) {
 				return null;
 			} else if (args.get(0).equalsIgnoreCase("setp")) {
@@ -255,21 +260,37 @@ public class PlayerParticlesCommandBody implements CommandExecutor, TabCompleter
 			}
 		} else if (args.size() == 3) {
 			if (args.get(0).equalsIgnoreCase("set")) {
-				return Arrays.asList("<particle.index>");
+				List<String> list = new ArrayList();
+				list.addAll(main.getDataManager().particleSettingMap.keySet());
+				list.removeIf(s -> !s.startsWith(args.get(2).toUpperCase()));
+				return list;
 			} else if (args.get(0).equalsIgnoreCase("remove")) {
-				return Arrays.asList("<particle.index>");
+				List<String> list = new ArrayList();
+				list.addAll(main.getDataManager().particleSettingMap.keySet());
+				list.removeIf(s -> !s.startsWith(args.get(2).toUpperCase()));
+				return list;
 			} else if (args.get(0).equalsIgnoreCase("removep")) {
-				return Arrays.asList("<effect.type>");
+				List<String> list = ToolBox.toStringList(EffectType.values());
+				list.removeIf(s -> !s.startsWith(args.get(2).toUpperCase()));
+				return list;
 			} else if (args.get(0).equalsIgnoreCase("setp")) {
-				return Arrays.asList("<effect.type>");
+				List<String> list = ToolBox.toStringList(EffectType.values());
+				list.removeIf(s -> !s.startsWith(args.get(2).toUpperCase()));
+				return list;
 			}
 		} else if (args.size() == 4){
 			if (args.get(0).equalsIgnoreCase("setp")) {
-				return Arrays.asList("<particle.index>");
+				List<String> list = new ArrayList();
+				list.addAll(main.getDataManager().particleSettingMap.keySet());
+				list.removeIf(s -> !s.startsWith(args.get(3).toUpperCase()));
+				return list;
 			} else if (args.get(0).equalsIgnoreCase("removep")) {
-				return Arrays.asList("<particle.index>");
+				List<String> list = new ArrayList();
+				list.addAll(main.getDataManager().particleSettingMap.keySet());
+				list.removeIf(s -> !s.startsWith(args.get(3).toUpperCase()));
+				return list;
 			} else {
-				return Arrays.asList(""); // To not display player names
+				return Arrays.asList(""); // To not display player names by default
 			}
 		}
 		return null;

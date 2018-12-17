@@ -5,11 +5,12 @@ import com.morkaz.moxlibrary.api.QueryUtils;
 import com.morkaz.moxlibrary.other.moxdata.MoxData;
 import com.morkaz.moxplayerparticles.MoxPlayerParticles;
 import com.morkaz.moxplayerparticles.misc.EffectType;
-import jdk.internal.jline.internal.Nullable;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,9 +60,12 @@ public class PlayerData {
 		return playerID;
 	}
 
-	@Nullable
 	public ParticleSetting getParticleSetting(EffectType effectType){
-		return new ParticleSetting(this.effectsDataMap.get(effectType));
+		ParticleSetting particleSetting = this.effectsDataMap.get(effectType);
+		if (particleSetting != null){
+			return new ParticleSetting(particleSetting);
+		}
+		return null;
 	}
 
 	public Long getLastLogin() {
@@ -148,12 +152,13 @@ public class PlayerData {
 			}
 			return;
 		}
-		List<String> queries = QueryUtils.constructQuerySingleValueSet(
+		List<Pair<String, Object>> pairsList = new ArrayList<>();
+		pairsList.add(Pair.of(main.ID_COLUMN, playerID));
+		pairsList.add(Pair.of(main.DATA_COLUMN, moxPlayerData.toString()));
+		pairsList.add(Pair.of(main.LAST_LOGIN_COLUMN, System.currentTimeMillis()));
+		List<String> queries = QueryUtils.constructQueryMultipleValuesSet(
 				main.TABLE,
-				main.ID_COLUMN,
-				playerID,
-				main.DATA_COLUMN,
-				moxPlayerData.toString(),
+				pairsList,
 				true,
 				main.getDatabase().getDatabaseType()
 		);

@@ -10,7 +10,10 @@ public class ParticleSetting extends ParticleData {
 	private String permission;
 
 	public ParticleSetting(ParticleSetting particleSetting){
-		super(particleSetting.getThis());
+		super(particleSetting);
+		if (particleSetting == null){
+			return;
+		}
 		this.particleIndex = particleSetting.getParticleIndex();
 		this.permission = particleSetting.getPermission();
 	}

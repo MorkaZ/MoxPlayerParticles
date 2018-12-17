@@ -1,8 +1,8 @@
 name: MoxPlayerParticles
 author: Morkazoid
 version: 0.1
-depend: []
+depend: [MoxCore]
 softdepend: []
-description: "Morkazoids premium player particles.yml (titles) plugin. Created for GC2.PL Network"
+description: "Morkazoids premium player particles (titles) plugin. Created for GC2.PL Network"
 main: com.morkaz.moxplayerparticles.MoxPlayerParticles
 api-version: 1.13

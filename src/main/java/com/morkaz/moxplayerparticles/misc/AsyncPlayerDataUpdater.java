@@ -7,6 +7,7 @@ public class AsyncPlayerDataUpdater extends SimpleSQLScheduler {
 
 	public AsyncPlayerDataUpdater(MoxPlayerParticles plugin) {
 		super(plugin, plugin.getDatabase(), false);
+		super.startScheduler();
 	}
 
 }

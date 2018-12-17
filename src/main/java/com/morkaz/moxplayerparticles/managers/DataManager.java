@@ -1,13 +1,22 @@
 package com.morkaz.moxplayerparticles.managers;
 
+import com.morkaz.moxlibrary.api.ConfigUtils;
 import com.morkaz.moxlibrary.api.ServerUtils;
+import com.morkaz.moxlibrary.api.ToolBox;
+import com.morkaz.moxlibrary.data.ParticleData;
 import com.morkaz.moxlibrary.other.moxdata.MoxData;
 import com.morkaz.moxplayerparticles.MoxPlayerParticles;
 import com.morkaz.moxplayerparticles.data.ParticleSetting;
 import com.morkaz.moxplayerparticles.data.PlayerData;
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,9 +27,9 @@ public class DataManager {
 
 	private MoxPlayerParticles main;
 	//          ID    , Data
-	private Map<String, PlayerData> playerDataMap = new HashMap<>();
+	public Map<String, PlayerData> playerDataMap = new HashMap<>();
 	//          Name  , Data
-	private Map<String, ParticleSetting> particleSettingMap = new HashMap<>(); // String to give ability to define own particle settings
+	public Map<String, ParticleSetting> particleSettingMap = new HashMap<>(); // String to give ability to define own particle settings
 
 	public DataManager(MoxPlayerParticles main) {
 		this.main = main;
@@ -29,48 +38,53 @@ public class DataManager {
 
 	public void reload(){
 		this.loadParticlesData();
-		this.loadAllPlayersData();
+		this.purgeOldPlayers();
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				// Getting it into task to make sure that DataManager will be initialized when PlayerData will request it from main instance.
+				// Without it, from PlayerData pont, DataManager will be null in main instance.
+				loadAllPlayersData();
+			}
+		}.runTask(main);
 	}
+
+	public void purgeOldPlayers(){
+		// Config
+		if (!main.getConfig().getBoolean("purger.enabled")){
+			return;
+		}
+		Integer configDays = main.getConfig().getInt("purger.max-not-online-days");
+		Long minDate = System.currentTimeMillis() - (86400000L * configDays.longValue()); // (current date) - (max time)
+		// Query
+		String query = "DELETE FROM `"+main.TABLE+"` WHERE `"+main.LAST_LOGIN_COLUMN+"` < "+minDate;
+		main.getDatabase().updateSync(query);
+	}
+
 
 	public void loadParticlesData(){
 		particleSettingMap.clear();
 		// Define default particle data for all particle types
 		for (Particle particle : Particle.values()){
+			if (particle.toString().contains("LEGACY")){
+				continue;
+			}
+			ParticleData particleData = ConfigUtils.loadParticleData(main.getParticlesConfig(), "default-setting", particle, main);
 			ParticleSetting particleSetting = new ParticleSetting(
 					particle.toString(),
 					main.getConfig().getString("permission-schema").replace("%particle%", particle.toString()),
-					particle,
-					null,
-					main.getParticlesConfig().getInt("default-setting.amount"),
-					main.getParticlesConfig().getDouble("default-setting.offset-X"),
-					main.getParticlesConfig().getDouble("default-setting.offset-Y"),
-					main.getParticlesConfig().getDouble("default-setting.offset-Z"),
-					main.getParticlesConfig().getDouble("default-setting.extra"),
-					main.getParticlesConfig().get("default-setting.data")
+					particleData
 			);
 			this.particleSettingMap.put(particle.toString(), particleSetting);
 		}
 		// Defined own particles data in config
 		ConfigurationSection indexes =  main.getParticlesConfig().getConfigurationSection("particles");
 		for (String index : indexes.getKeys(false)){
-			Particle particle = Particle.valueOf(main.getParticlesConfig().getString("particles."+index+".particle"));
-			Double offsetX = main.getParticlesConfig().getDouble("particles."+index+".offset-X");
-			Double offsetY = main.getParticlesConfig().getDouble("particles."+index+".offset-Y");
-			Double offsetZ = main.getParticlesConfig().getDouble("particles."+index+".offset-Z");
-			Integer amount = main.getParticlesConfig().getInt("particles."+index+".amount");
-			Double extra = main.getParticlesConfig().getDouble("particles."+index+".extra");
-			Object data = main.getParticlesConfig().get("particles."+index+".data");
+			ParticleData particleData = ConfigUtils.loadParticleData(main.getParticlesConfig(), "particles."+index, main);
 			ParticleSetting particleSetting = new ParticleSetting(
 					index,
-					main.getConfig().getString("permission-schema").replace("%particle%", particle.toString()),
-					particle,
-					null,
-					amount,
-					offsetX,
-					offsetY,
-					offsetZ,
-					extra,
-					data
+					main.getConfig().getString("permission-schema").replace("%particle%", index),
+					particleData
 			);
 			this.particleSettingMap.put(index, particleSetting);
 		}

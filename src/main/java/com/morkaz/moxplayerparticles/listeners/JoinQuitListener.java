@@ -14,6 +14,7 @@ public class JoinQuitListener implements Listener {
 
 	public JoinQuitListener(MoxPlayerParticles main) {
 		this.main = main;
+		main.getServer().getPluginManager().registerEvents(this, main);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)

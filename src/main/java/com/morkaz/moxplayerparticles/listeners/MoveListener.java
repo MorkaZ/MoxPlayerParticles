@@ -40,7 +40,7 @@ public class MoveListener implements Listener {
 		ParticleSetting particleSetting = playerData.getParticleSetting(EffectType.WALK);
 		if (particleSetting != null){
 			Location behindLocation = LocationUtils.getLocationBehindPlayer(event.getPlayer(), 1d);
-			particleSetting.spawn(event.getPlayer(), behindLocation);
+			particleSetting.spawn(event.getPlayer(), behindLocation.add(0d, 1.1d, 0d));
 		}
 	}
 
@@ -70,9 +70,9 @@ public class MoveListener implements Listener {
 						for (int i = 0; i < 6; i++){
 							Location spawnLocation = new Location(
 									location.getWorld(),
-									location.getX()+ThreadLocalRandom.current().nextDouble(-0.1d, 0.1d),
+									location.getX()+ThreadLocalRandom.current().nextDouble(-0.25d, 0.25d),
 									location.getY(),
-									location.getZ()+ThreadLocalRandom.current().nextDouble(-0.1d, 0.1d)
+									location.getZ()+ThreadLocalRandom.current().nextDouble(-0.25d, 0.25d)
 							);
 							particleSetting.spawn(player, spawnLocation);
 						}

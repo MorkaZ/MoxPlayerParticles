@@ -7,6 +7,10 @@ import com.morkaz.moxlibrary.database.sql.mysql.MySQLDatabase;
 import com.morkaz.moxlibrary.database.sql.sqlite.SQLiteDatabase;
 import com.morkaz.moxplayerparticles.commands.PlayerParticlesCommandBody;
 import com.morkaz.moxplayerparticles.configuration.ConfigManager;
+import com.morkaz.moxplayerparticles.listeners.BlockInteractListener;
+import com.morkaz.moxplayerparticles.listeners.EntityDamageListener;
+import com.morkaz.moxplayerparticles.listeners.JoinQuitListener;
+import com.morkaz.moxplayerparticles.listeners.MoveListener;
 import com.morkaz.moxplayerparticles.managers.DataManager;
 import com.morkaz.moxplayerparticles.misc.AsyncPlayerDataUpdater;
 import com.morkaz.moxplayerparticles.misc.Metrics;
@@ -93,6 +97,12 @@ public class MoxPlayerParticles extends JavaPlugin {
 		PlayerParticlesCommandBody playerParticlesCommandBody = new PlayerParticlesCommandBody(this);
 		command.setExecutor(playerParticlesCommandBody);
 		command.setTabCompleter(playerParticlesCommandBody);
+
+		//Initialize Listeners
+		new JoinQuitListener(this);
+		new EntityDamageListener(this);
+		new MoveListener(this);
+		new BlockInteractListener(this);
 
 		//Ending
 		Bukkit.getLogger().info("["+getDescription().getName()+"] Plugin enabled!");

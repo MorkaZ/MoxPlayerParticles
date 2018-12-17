@@ -1,27 +1,43 @@
 default-setting:
-  offset-X: 0.05
-  offset-Y: 0.05
-  offset-Z: 1
+  offset-X: 0.1
+  offset-Y: 0.1
+  offset-Z: 0.1
   amount: 1
   extra: 0 #Speed
-  data: 0 #For example color
+  data:
+    dust-options:
+      red: 255
+      green: 60
+      blue: 60
+      size: 1
+    item:
+      material: "STONE"
+    block-data:
+      material: "STONE"
+
 
 #Your own configuration for specific particles. Just type particle enum to replace defaults with your settings.
 #You can also define your own special particles based on already existing ones but with other offset, amount, data etc.
 particles:
+  #Override default example
   FLAME:
     particle: "FLAME"
     offset-X: 0.15
     offset-Y: 0.15
     offset-Z: 1
-    amount: 2
+    amount: 6
     extra: 0
-    data: 0
-  my-own:
+  #Custom particle example
+  PINK_REDSTONE:
     particle: "REDSTONE"
     offset-X: 0.15
     offset-Y: 0.15
     offset-Z: 0.5
     amount: 2
     extra: 0
-    data: 1 #Color
+    data:
+      dust-options:
+        red: 250
+        green: 150
+        blue: 150
+        size: 2

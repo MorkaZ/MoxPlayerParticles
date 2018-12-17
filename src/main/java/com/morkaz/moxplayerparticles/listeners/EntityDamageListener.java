@@ -5,6 +5,7 @@ import com.morkaz.moxplayerparticles.MoxPlayerParticles;
 import com.morkaz.moxplayerparticles.data.ParticleSetting;
 import com.morkaz.moxplayerparticles.data.PlayerData;
 import com.morkaz.moxplayerparticles.misc.EffectType;
+import org.bukkit.Particle;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -20,6 +21,7 @@ public class EntityDamageListener implements Listener {
 
 	public EntityDamageListener(MoxPlayerParticles main) {
 		this.main = main;
+		main.getServer().getPluginManager().registerEvents(this, main);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -36,9 +38,22 @@ public class EntityDamageListener implements Listener {
 						@Override
 						public void run() {
 							if (victim.getHealth() != preHealth){
+								if (particleSetting.getCount() < 12 && particleSetting.getParticle() != Particle.EXPLOSION_HUGE
+										&& particleSetting.getParticle() != Particle.EXPLOSION_LARGE && particleSetting.getParticle() != Particle.EXPLOSION_NORMAL){
+									particleSetting.setCount(particleSetting.getCount()+12);
+								}
+								if (particleSetting.getOffsetX() < 0.3d){
+									particleSetting.setOffsetX(particleSetting.getOffsetX()+0.3d);
+								}
+								if (particleSetting.getOffsetZ() < 0.3d){
+									particleSetting.setOffsetZ(particleSetting.getOffsetZ()+0.3d);
+								}
+								if (particleSetting.getOffsetY() < 0.2d){
+									particleSetting.setOffsetY(particleSetting.getOffsetY()+0.2d);
+								}
 								particleSetting.spawn(
 										player,
-										event.getEntity().getLocation()
+										event.getEntity().getLocation().add(0d, 0.75d, 0d)
 								);
 							}
 						}
