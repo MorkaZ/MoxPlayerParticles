@@ -1,7 +1,17 @@
+# Locale of plugin messages.
 locale: pl
 
+# Permission schema for default particles.
+# Without it players will be unnable to set particle using "/mpp set" command.
 permission-schema: "mox.playerparticles.particle.%particle%"
 
+# It will purge cache of "selected particles" if player will be not active of X days.
+purger:
+  enabled: true
+  max-not-online-days: 30
+
+# Database configuration.
+# Sqlite - File database, MySQL - Network database.
 database:
   type: "sqlite"
   settings:

@@ -2,20 +2,14 @@ package com.morkaz.moxplayerparticles.managers;
 
 import com.morkaz.moxlibrary.api.ConfigUtils;
 import com.morkaz.moxlibrary.api.ServerUtils;
-import com.morkaz.moxlibrary.api.ToolBox;
 import com.morkaz.moxlibrary.data.ParticleData;
 import com.morkaz.moxlibrary.other.moxdata.MoxData;
 import com.morkaz.moxplayerparticles.MoxPlayerParticles;
 import com.morkaz.moxplayerparticles.data.ParticleSetting;
 import com.morkaz.moxplayerparticles.data.PlayerData;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Material;
 import org.bukkit.Particle;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.ResultSet;
