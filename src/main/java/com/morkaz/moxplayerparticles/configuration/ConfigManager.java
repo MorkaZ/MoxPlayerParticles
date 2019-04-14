@@ -13,7 +13,7 @@ public class ConfigManager extends LocaleConfiguration {
 	public ConfigManager(MoxPlayerParticles plugin) {
 		super(plugin, "messages", "pl", "locale");
 		this.main = plugin;
-		this.reload();
+		this.reloadParticlesConfig();
 	}
 
 	public FileConfiguration getParticlesConfig() {

@@ -6,7 +6,6 @@ import com.morkaz.moxplayerparticles.MoxPlayerParticles;
 import com.morkaz.moxplayerparticles.data.ParticleSetting;
 import com.morkaz.moxplayerparticles.data.PlayerData;
 import com.morkaz.moxplayerparticles.misc.EffectType;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

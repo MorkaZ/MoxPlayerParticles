@@ -35,12 +35,14 @@ public class MoveListener implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void moveListener(PlayerMoveEvent event) {
-		lastMovedMap.put(event.getPlayer(), System.currentTimeMillis());
-		PlayerData playerData = main.getDataManager().getPlayerData(ServerUtils.getPlayerID(event.getPlayer()));
-		ParticleSetting particleSetting = playerData.getParticleSetting(EffectType.WALK);
-		if (particleSetting != null){
-			Location behindLocation = LocationUtils.getLocationBehindPlayer(event.getPlayer(), 1d);
-			particleSetting.spawn(event.getPlayer(), behindLocation.add(0d, 1.1d, 0d));
+		if (event.getFrom().getX() != event.getTo().getX() || event.getFrom().getY() != event.getTo().getY() || event.getFrom().getZ() != event.getTo().getZ()){
+			lastMovedMap.put(event.getPlayer(), System.currentTimeMillis());
+			PlayerData playerData = main.getDataManager().getPlayerData(ServerUtils.getPlayerID(event.getPlayer()));
+			ParticleSetting particleSetting = playerData.getParticleSetting(EffectType.WALK);
+			if (particleSetting != null){
+				Location behindLocation = LocationUtils.getLocationBehindPlayer(event.getPlayer(), 1d);
+				particleSetting.spawn(event.getPlayer(), behindLocation.add(0d, 1.1d, 0d));
+			}
 		}
 	}
 
